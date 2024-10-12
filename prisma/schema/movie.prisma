@@ -1,0 +1,28 @@
+model Movie {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title String
+  slug  String @unique
+
+  poster    String
+  bigPoster String @map("big_poster")
+
+  year     Int    @default(0)
+  duration Int    @default(0)
+  country  String @default("")
+
+  views Int @default(0)
+
+  videoUrl String @map("video_url")
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  genres  Genre[]
+  Actor   Actor[]
+  reviews Review[]
+
+  @@map("movies")
+}

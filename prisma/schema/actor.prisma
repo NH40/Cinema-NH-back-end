@@ -1,0 +1,14 @@
+model Actor {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name String
+  slug String @unique
+
+  photoUrl String @map("photo_url")
+
+  movies Movie[]
+
+  @@map("actor")
+}

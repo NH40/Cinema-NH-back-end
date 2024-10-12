@@ -1,0 +1,19 @@
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email      String @unique
+  password   String
+  name       String @default("No name")
+  avatarPath String @default("/uploads/default-avatar.png") @map("avatar_path")
+
+  role         UserRole @default(USER)
+  isHasPremium Boolean  @default(false) @map("is_has_premium")
+
+  favorites Movie[]
+  reviews   Review[]
+  payment   Payment[]
+
+  @@map("user")
+}
