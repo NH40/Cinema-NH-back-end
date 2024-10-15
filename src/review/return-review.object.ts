@@ -8,11 +8,5 @@ export const returnReviewObject: Prisma.ReviewSelect = {
 	createdAt: true,
 	user: {
 		select: returnUserObject
-	},
-	movie: {
-		select: {
-			//TODO: Сделать return movie object
-			id: true
-		}
 	}
 }
