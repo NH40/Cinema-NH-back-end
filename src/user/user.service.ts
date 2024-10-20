@@ -53,7 +53,7 @@ export class UserService {
 
 	//Админ запросы
 	async getAll(searchTerm?: string) {
-		if (searchTerm) this.search(searchTerm)
+		if (searchTerm) return this.search(searchTerm)
 
 		return this.prisma.user.findMany({
 			select: returnUserObject,
@@ -67,8 +67,12 @@ export class UserService {
 		return this.prisma.user.findMany({
 			where: {
 				OR: [
-					{ name: { contains: searchTerm, mode: 'insensitive' } },
-					{ email: { contains: searchTerm, mode: 'insensitive' } }
+					{
+						email: {
+							contains: searchTerm,
+							mode: 'insensitive'
+						}
+					}
 				]
 			}
 		})

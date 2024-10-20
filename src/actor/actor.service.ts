@@ -9,7 +9,7 @@ export class ActorService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll(searchTerm?: string) {
-		if (searchTerm) this.search(searchTerm)
+		if (searchTerm) return this.search(searchTerm)
 
 		return this.prisma.actor.findMany({
 			select: returnActorObject,
