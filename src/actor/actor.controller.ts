@@ -30,7 +30,7 @@ export class ActorController {
 		return this.actorService.getBySlug(slug)
 	}
 
-	//Запросы для Админа
+	/* Запросы для админа */
 
 	@Get('by-id/:id')
 	@Auth('admin')
@@ -40,8 +40,8 @@ export class ActorController {
 
 	@UsePipes(new ValidationPipe())
 	@Post()
-	@Auth('admin')
 	@HttpCode(200)
+	@Auth('admin')
 	async create() {
 		return this.actorService.create()
 	}
@@ -51,18 +51,18 @@ export class ActorController {
 	@HttpCode(200)
 	@Auth('admin')
 	async update(@Param('id') id: string, @Body() dto: UpdateActorDto) {
-		const updateActor = await this.actorService.update(id, dto)
+		const updatedActor = await this.actorService.update(id, dto)
 
-		if (!updateActor) throw new NotFoundException('Актер не найден')
-		return updateActor
+		if (!updatedActor) throw new NotFoundException('Актёр не найден')
+		return updatedActor
 	}
 
 	@Delete(':id')
 	@Auth('admin')
 	async delete(@Param('id') id: string) {
-		const deleteActor = await this.actorService.delete(id)
+		const deletedActor = await this.actorService.delete(id)
 
-		if (!deleteActor) throw new NotFoundException('Актер не найден')
-		return deleteActor
+		if (!deletedActor) throw new NotFoundException('Актёр не найден')
+		return deletedActor
 	}
 }

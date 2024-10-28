@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+
 import { PrismaService } from 'src/prisma/prisma.service'
 import { generateSlug } from 'src/utils/generate-slug'
 import { UpdateActorDto } from './dto/update-actor.dto'
@@ -6,7 +7,7 @@ import { returnActorObject } from './return-actor.object'
 
 @Injectable()
 export class ActorService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(private prisma: PrismaService) {}
 
 	async getAll(searchTerm?: string) {
 		if (searchTerm) return this.search(searchTerm)
@@ -42,12 +43,12 @@ export class ActorService {
 			select: returnActorObject
 		})
 
-		if (!actor) throw new NotFoundException('Актер не найден')
+		if (!actor) throw new NotFoundException('Актёр не найден')
 
 		return actor
 	}
 
-	//Запросы для админа
+	/* Запросы для админа */
 
 	async getById(id: string) {
 		const actor = await this.prisma.actor.findUnique({
@@ -57,23 +58,25 @@ export class ActorService {
 			select: returnActorObject
 		})
 
-		if (!actor) throw new NotFoundException('Актер не найден')
+		if (!actor) throw new NotFoundException('Актёр не найден')
 
 		return actor
 	}
 
 	async create() {
-		return this.prisma.actor.create({
+		const actor = await this.prisma.actor.create({
 			data: {
 				name: '',
 				slug: '',
 				photoUrl: ''
 			}
 		})
+
+		return actor.id
 	}
 
 	async update(id: string, dto: UpdateActorDto) {
-		const actor = await this.prisma.actor.update({
+		return this.prisma.actor.update({
 			where: {
 				id
 			},
@@ -83,10 +86,6 @@ export class ActorService {
 				photoUrl: dto.photoUrl
 			}
 		})
-
-		if (!actor) throw new NotFoundException('Актер не найден')
-
-		return actor
 	}
 
 	async delete(id: string) {

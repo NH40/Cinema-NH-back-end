@@ -37,6 +37,17 @@ export class UserController {
 		return this.userService.toggleFavorite(movieId, userId)
 	}
 
+	@UsePipes(new ValidationPipe())
+	@Put(':id')
+	@HttpCode(200)
+	async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+		const updatedUser = await this.userService.update(id, dto)
+
+		if (!updatedUser) throw new NotFoundException('Пользователь не найден')
+
+		return updatedUser
+	}
+
 	//Запросы для Админов
 
 	@Get()
@@ -49,18 +60,6 @@ export class UserController {
 	@Auth('admin')
 	async getById(@Param('id') id: string) {
 		return this.userService.getById(id)
-	}
-
-	@UsePipes(new ValidationPipe())
-	@Put(':id')
-	@HttpCode(200)
-	@Auth('admin')
-	async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-		const updatedUser = await this.userService.update(id, dto)
-
-		if (!updatedUser) throw new NotFoundException('Пользователь не найден')
-
-		return updatedUser
 	}
 
 	@Delete(':id')

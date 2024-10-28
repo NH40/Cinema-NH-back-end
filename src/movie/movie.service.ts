@@ -56,8 +56,7 @@ export class MovieService {
 			include: {
 				Actor: true,
 				genres: true
-			},
-			take: 8
+			}
 		})
 		if (!movies) throw new NotFoundException('Популярных фильмов не найдено')
 
