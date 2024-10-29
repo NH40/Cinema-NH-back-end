@@ -27,7 +27,7 @@ export class StatisticsService {
 		})
 
 		return [
-			{ id: 1, name: 'Просмотры', value: countViews._sum.views / 2 },
+			{ id: 1, name: 'Просмотры', value: countViews._sum.views },
 			{ id: 2, name: 'Фильмы', value: countMovies },
 			{ id: 3, name: 'Пользователи', value: countUsers },
 			{ id: 4, name: 'Средний рейтинг', value: averageRating._avg.rating || 0 }
