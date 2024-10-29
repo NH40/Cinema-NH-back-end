@@ -48,18 +48,17 @@ export class UserController {
 		return updatedUser
 	}
 
+	@Get('by-id/:id')
+	async getById(@Param('id') id: string) {
+		return this.userService.getById(id)
+	}
+
 	//Запросы для Админов
 
 	@Get()
 	@Auth('admin')
 	async getAll(@Query('searchTerm') searchTerm?: string) {
 		return this.userService.getAll(searchTerm)
-	}
-
-	@Get('by-id/:id')
-	@Auth('admin')
-	async getById(@Param('id') id: string) {
-		return this.userService.getById(id)
 	}
 
 	@Delete(':id')
